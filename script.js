@@ -2,9 +2,7 @@ const calculatorDisplay = document.querySelector('h1');
 const inputBtns = document.querySelectorAll('button');
 const clearBtn = document.getElementById('clear-btn');
 
-let firstValue = 0;
-let operatorValue = '';
-let awaitingNextValue = false;
+
 
 function sendNumberValue(number) {
   // If current display value is 0, replace it, if not add number
@@ -18,9 +16,23 @@ function addDecimal(){
     calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
   }
 }
+let firstValue = 0;
+let operatorValue = '';
+let awaitingNextValue = false;
 
 function useOperator(operator){
-
+  const currentValue = Number(calculatorDisplay.textContent);
+  // Assign firstValue if no value
+  if(!firstValue){
+    firstValue = currentValue;
+  } else {
+    console.log('currentValue', currentValue);
+  }
+  // Ready for next value, store operator
+  awaitingNextValue = true;
+  operatorValue = operator;
+  console.log('firstValue', firstValue);
+  console.log('operator', operatorValue);
 }
 
 // Add Event Listeners for numbers, operators, decimal buttons
@@ -34,8 +46,11 @@ inputBtns.forEach((inputBtn) => {
  }
 });
 
-// Reset display 
+// Reset all values, display 
 function resetAll(){
+   firstValue = 0;
+   operatorValue = '';
+   awaitingNextValue = false;
   calculatorDisplay.textContent = '0';
 }
 
